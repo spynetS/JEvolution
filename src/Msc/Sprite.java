@@ -101,7 +101,16 @@ public class Sprite {
         g2.drawImage(getSpriteImage(), null, 0, 0);
 
         // Return rotated buffer image
-        setSpriteImage(newImage);
+        setSpriteImage((newImage));
     }
+    public static BufferedImage resize(BufferedImage img,Vector2 scale) {
+        Image tmp = img.getScaledInstance(scale.getX(), scale.getY(), Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(scale.getX(), scale.getY(), BufferedImage.TYPE_INT_ARGB);
 
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+
+        return dimg;
+    }
 }

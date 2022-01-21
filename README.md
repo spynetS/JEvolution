@@ -1,2 +1,2 @@
 # JEvolution
-This is a totally awsome evoliution simulator made in java swing 
+This is a totally awesome evolution simulator made in java swing 

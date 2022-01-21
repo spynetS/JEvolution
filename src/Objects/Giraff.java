@@ -3,6 +3,8 @@ package Objects;
 import Msc.Sprite;
 import Msc.Vector2;
 
+import java.util.Random;
+
 public class Giraff extends Object{
 
 
@@ -16,14 +18,32 @@ public class Giraff extends Object{
         //getSprite().rotate(180);
         Vector2[] temp = new Vector2[]{new Vector2(1,0),new Vector2(1,1)};
         this.setSpriteVector(temp);
+        setTimer(20);
+    }
+
+    private int ranTimer = 0;
+    //Implemt forward
+    private void randomRot()
+    {
+        if(ranTimer>200)
+        {
+            Random ran = new Random();
+            int test = ran.nextInt(360);
+            System.out.println(test);
+            getSprite().rotate(test);
+            ranTimer = 0;
+        }
+        ranTimer+=1;
     }
 
     @Override
     public void Update()
     {
-        //Vector2 pos = new Vector2(getPosition().getX()+1,getPosition().getY());
-        //this.setPosition(pos);
-        //System.out.println(pos.toString());
+        super.Update();
+        int test = (int) (this.getHunger()-0.01f);
+        this.setHunger(test);
+        randomRot();
+        //setPosition(new Vector2(getPosition().getX()+1,getPosition().getY()));
     }
 
 

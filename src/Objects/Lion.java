@@ -19,6 +19,8 @@ public class Lion extends Object{
         this.setSpriteVector(temp);
     }
 
-
-
+    @Override
+    public void Update() {
+        super.Update();
+    }
 }
