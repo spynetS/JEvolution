@@ -3,7 +3,7 @@ package Objects;
 import Msc.Sprite;
 import Msc.Vector2;
 
-public class Lion extends Object{
+public class Lion extends Animal{
 
 
 
@@ -11,11 +11,7 @@ public class Lion extends Object{
         super(position);
         randomRot();
         setPosition(getPosition().add(getDirection().getNormelized().multiply(getCurrentSpeed())));
-
+        setCurrentSpeed(1);
     }
 
-    @Override
-    public void Update() {
-        super.Update();
-    }
 }

@@ -35,13 +35,11 @@ public class Map extends JPanel {
         long start = System.nanoTime();
         super.paintComponent(g);
 
-        //g.drawRect(x,0,100,100);
         g.drawImage((Image) this.giraff.getAnimation(), (int) giraff.getSpritePosition().getX(), (int) giraff.getSpritePosition().getY(),null);
         g.drawImage((Image) this.lion.getAnimation(), (int) lion.getSpritePosition().getX(), (int) lion.getSpritePosition().getY(),null);
         g.drawImage((Image) this.tree.getAnimation(), (int) tree.getSpritePosition().getX(), (int) tree.getSpritePosition().getY(),null);
-        //g.drawImage((Image) this.lion.getAnimation(), (int) lion.getSpritePosition().getX(), (int) lion.getSpritePosition().getY(),null);
-        //g.drawImage((Image) this.lion.getAnimation(), (int) lion.getSpritePosition().getX(), (int) lion.getSpritePosition().getY(),null);
-        //System.out.println(lion.getSprite().getGrid());
+
+        g.drawRect((int) ((int) this.giraff.getPosition().getX()-giraff.getRadius()/2), (int) ((int) giraff.getPosition().getY()-giraff.getRadius()/2), (int) giraff.getRadius(), (int) giraff.getRadius());
         long end = System.nanoTime();
         //System.out.println((start-end)/1000000);
 

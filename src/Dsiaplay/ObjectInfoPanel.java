@@ -1,5 +1,6 @@
 package Dsiaplay;
 
+import Objects.Animal;
 import Objects.Object;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ public class ObjectInfoPanel extends JPanel {
         add(stamina);
     }
 
-    public void setData(Object object)
+    public void setData(Animal object)
     {
         health.setText(String.valueOf(object.getHealth()));
         hunger.setText(String.valueOf(object.getHunger()));

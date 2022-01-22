@@ -17,19 +17,7 @@ public class Object {
 
     private int spriteCounter;
     private int currentSprite;
-
-    private float topSpeed = 2;
-    private float cruisingSpeed=0.5f;
-    private float currentSpeed=0.5f;
-
-    private float health=100; //full health
-    private float hunger=100; // no hunger
-    private float thirst=100; // no thirst
-    private float stamina=100; // full stamina
-
-    private int ranTimer = 0;
-
-    Random ran = new Random();
+    private float radius = 10;
 
 
     private ObjectInfoPanel infoPanel = new ObjectInfoPanel();
@@ -50,6 +38,14 @@ public class Object {
         sprite.setPath("/spritesheet.png");
         sprite.loadSprites(new Vector2[]{new Vector2(0,0),new Vector2(0,1)});
 
+    }
+
+    public float getRadius() {
+        return radius* scale.getX();
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
     }
 
     public Vector2 getDirection() {
@@ -77,8 +73,8 @@ public class Object {
     }
 
     public Vector2 getSpritePosition(){
-        float x = (getPosition().getX()-((sprite.getTILE_SIZE()/2)));
-        float y = (getPosition().getY()-((sprite.getTILE_SIZE()/2)));
+        float x = (getPosition().getX()-((sprite.getTILE_SIZE()/4)));
+        float y = (getPosition().getY()-((sprite.getTILE_SIZE()/4)));
 
         return new Vector2(x,y);
     }
@@ -99,61 +95,6 @@ public class Object {
         this.currentSprite = currentSprite;
     }
 
-    public float getTopSpeed() {
-        return topSpeed;
-    }
-
-    public void setTopSpeed(float topSpeed) {
-        this.topSpeed = topSpeed;
-    }
-
-    public float getCruisingSpeed() {
-        return cruisingSpeed;
-    }
-
-    public void setCruisingSpeed(float cruisingSpeed) {
-        this.cruisingSpeed = cruisingSpeed;
-    }
-
-    public float getCurrentSpeed() {
-        return currentSpeed;
-    }
-
-    public void setCurrentSpeed(float currentSpeed) {
-        this.currentSpeed = currentSpeed;
-    }
-
-    public float getHealth() {
-        return health;
-    }
-
-    public void setHealth(float health) {
-        this.health = health;
-    }
-
-    public float getHunger() {
-        return hunger;
-    }
-
-    public void setHunger(float hunger) {
-        this.hunger = hunger;
-    }
-
-    public float getThirst() {
-        return thirst;
-    }
-
-    public void setThirst(float thirst) {
-        this.thirst = thirst;
-    }
-
-    public float getStamina() {
-        return stamina;
-    }
-
-    public void setStamina(float stamina) {
-        this.stamina = stamina;
-    }
 
     public AnimalStates getState() {
         return state;
@@ -189,19 +130,16 @@ public class Object {
         this.position = position;
     }
 
-    public void randomRot()
+    /**
+     Returns the angle between object position and vector given
+     **/
+    public double LookAt(Vector2 toLookAt)
     {
-        if(ranTimer>200)
-        {
-            int angle = ran.nextInt(360);
-            System.out.println(angle);
-            setAngle(angle);
-            setDirection(getDirection().getDirection((double)angle));
-
-            ranTimer = 0;
-
-        }
-        ranTimer+=1;
+        float b = position.getX()-toLookAt.getX();
+        float a = position.getY()-toLookAt.getY();
+        //a/b=tan v
+        //System.out.println("a; "+a+"b: "+b);
+        return(Math.toDegrees(Math.atan(a/b)));
     }
 
     public void Update()

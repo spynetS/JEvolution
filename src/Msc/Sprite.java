@@ -14,7 +14,7 @@ public class Sprite {
     private String path;
     private Vector2 grid;
     private int TILE_SIZE = 255;
-    private Vector2 scale = new Vector2(200,200);
+    private Vector2 scale = new Vector2(150,150);
 
     private BufferedImage[] sprites;
 

@@ -67,4 +67,9 @@ public class Vector2 {
         return Math.max(Math.abs(x), Math.abs(y));
     }
 
+    public double getDistance(Vector2 vector2)
+    {
+        return Math.sqrt(Math.pow(Math.abs(vector2.getY()-y),2)+Math.pow(Math.abs(vector2.getX()-x),2));
+    }
+
 }
