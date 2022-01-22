@@ -41,12 +41,17 @@ public class Animal extends Object{
         this.state = state;
     }
 
+    public static int random_int(int Min, int Max)
+    {
+        return (int) (Math.random()*(Max-Min))+Min;
+    }
+
     public void randomRot()
     {
-        if(ranTimer>200)
+        if(ranTimer>random_int(100,500))
         {
             int angle = ran.nextInt(360);
-            System.out.println(angle);
+            //System.out.println(angle);
             setAngle(angle);
             setDirection(getDirection().getDirection((double)angle));
 
