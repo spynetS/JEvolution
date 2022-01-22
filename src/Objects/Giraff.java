@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class Giraff extends Object{
 
+    private Vector2 direction = new Vector2(1,0);
 
     public Giraff(Vector2 position) {
         super(position);
@@ -25,12 +26,14 @@ public class Giraff extends Object{
     //Implemt forward
     private void randomRot()
     {
-        if(ranTimer>200)
+        if(ranTimer>100)
         {
             Random ran = new Random();
-            int test = ran.nextInt(360);
-            System.out.println(test);
-            getSprite().rotate(test);
+            int angle = ran.nextInt(360);
+            direction = direction.getDirection((double)angle);
+            System.out.println(direction.toString());
+            System.out.println(angle);
+            getSprite().rotate(angle);
             ranTimer = 0;
         }
         ranTimer+=1;
@@ -43,7 +46,7 @@ public class Giraff extends Object{
         int test = (int) (this.getHunger()-0.01f);
         this.setHunger(test);
         randomRot();
-        //setPosition(new Vector2(getPosition().getX()+1,getPosition().getY()));
+        setPosition(getPosition().add(direction.multiply(direction.getNegative())));
     }
 
 

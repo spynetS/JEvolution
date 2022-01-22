@@ -173,8 +173,8 @@ public class Object {
 
     public void Update()
     {
-        getInfoPanel().setLocation(new Point(getPosition().getX()-100,getPosition().getY()-80));
-        infoPanel.setData(this);
+        //getInfoPanel().setLocation(new Point(getPosition().getX()-100,getPosition().getY()-80));
+        //infoPanel.setData(this);
     }
 
     public void Die()
