@@ -49,12 +49,8 @@ public class Vector2 {
     }
 
     public Vector2 getDirection(double angle) {
-        int a;
-        int b=1;
         float x = (float) Math.cos(Math.toRadians(angle));
         float y = (float) Math.sin(Math.toRadians(angle));
-        //a = (int) Math.tan(90-angle);
-        System.out.println(Math.cos(angle));
         return new Vector2(-x,-y);
     }
 

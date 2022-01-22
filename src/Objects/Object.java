@@ -13,6 +13,8 @@ public class Object {
     private Vector2 scale;
     private Vector2 direction = new Vector2(1,0);
 
+    private String tag="untagged";
+
     private float angle=180;
 
     private int spriteCounter;
@@ -37,7 +39,16 @@ public class Object {
         sprite = new Sprite();
         sprite.setPath("/spritesheet.png");
         sprite.loadSprites(new Vector2[]{new Vector2(0,0),new Vector2(0,1)});
+        setScale(new Vector2(20,20));
 
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public float getRadius() {
@@ -95,16 +106,6 @@ public class Object {
         this.currentSprite = currentSprite;
     }
 
-
-    public AnimalStates getState() {
-        return state;
-    }
-
-    public void setState(AnimalStates state) {
-        this.state = state;
-    }
-
-    private AnimalStates state;
 
     public Vector2 getScale() {
         return scale;
@@ -168,6 +169,11 @@ public class Object {
         getSprite().setSpriteImage(getSprite().getSprites()[currentSprite]);
 
         return (getSprite().rotate(angle));
+    }
+
+    public void onCollision(Object collision)
+    {
+
     }
 
 }

@@ -15,7 +15,7 @@ public class Animal extends Object{
     private float thirst=100; // no thirst
     private float stamina=100; // full stamina
 
-
+    private AnimalStates state=AnimalStates.NORMAL;
     
     private int ranTimer = 0;
     Random ran = new Random();
@@ -33,6 +33,13 @@ public class Animal extends Object{
     }
 
 
+    public AnimalStates getState() {
+        return state;
+    }
+
+    public void setState(AnimalStates state) {
+        this.state = state;
+    }
 
     public void randomRot()
     {

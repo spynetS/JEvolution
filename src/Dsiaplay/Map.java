@@ -1,45 +1,66 @@
 package Dsiaplay;
 
+import Msc.AnimalHandler;
 import Msc.Vector2;
-import Objects.Giraffe;
-import Objects.Lion;
-import Objects.Tree;
+import Objects.*;
+import Objects.Object;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Map extends JPanel {
 
-    Giraffe giraff;
-    Lion lion;
-    Tree tree = new Tree(new Vector2(400,300));
-
     public Map() {
-        giraff = new Giraffe(new Vector2(600,500));
-        lion = new Lion(new Vector2(600,500));
+        AnimalHandler.AddAnimal(new Tree(new Vector2(400,300)));
+        AnimalHandler.AddAnimal(new Giraffe(new Vector2(600,500)));
+        AnimalHandler.AddAnimal(new Giraffe(new Vector2(600,500)));
+        AnimalHandler.AddAnimal(new Giraffe(new Vector2(600,500)));
+        AnimalHandler.AddAnimal(new Giraffe(new Vector2(600,500)));
+        AnimalHandler.AddAnimal(new Lion(new Vector2(600,700)));
+
+
         setBackground(new Color(205, 171, 126));
-        add(giraff.getInfoPanel());
-        add(lion.getInfoPanel());
     }
     int x = 0;
+    public void CollisionHandler()
+    {
+        for(Object obj : AnimalHandler.getObjects()) {
+            for(Object obj2 : AnimalHandler.getObjects()) {
+                if(obj.getPosition().getDistance(obj2.getPosition())<=obj.getRadius()&&!obj.equals(obj2))
+                {
+                    obj.onCollision(obj2);
+                }
+            }
+        }
+    }
+    private void UpdateObjects()
+    {
+        for(Object obj:AnimalHandler.getObjects())
+        {
+            obj.Update();
+        }
+    }
+
     public void Update()
     {
-        giraff.Update();
+        UpdateObjects();
+        CollisionHandler();
         repaint();
         Toolkit.getDefaultToolkit().sync();
-        x+=1;
-        lion.Update();
     }
     @Override
     protected void paintComponent(Graphics g) {
         long start = System.nanoTime();
         super.paintComponent(g);
 
-        g.drawImage((Image) this.giraff.getAnimation(), (int) giraff.getSpritePosition().getX(), (int) giraff.getSpritePosition().getY(),null);
-        g.drawImage((Image) this.lion.getAnimation(), (int) lion.getSpritePosition().getX(), (int) lion.getSpritePosition().getY(),null);
-        g.drawImage((Image) this.tree.getAnimation(), (int) tree.getSpritePosition().getX(), (int) tree.getSpritePosition().getY(),null);
+        for(Object animal : AnimalHandler.getObjects())
+        {
+            g.drawImage((Image) animal.getAnimation(), (int) animal.getSpritePosition().getX(), (int) animal.getSpritePosition().getY(),null);
+            g.drawOval((int) ((int) animal.getPosition().getX()-animal.getRadius()/2), (int) ((int) animal.getPosition().getY()-animal.getRadius()/2), (int) animal.getRadius(), (int) animal.getRadius());
 
-        g.drawRect((int) ((int) this.giraff.getPosition().getX()-giraff.getRadius()/2), (int) ((int) giraff.getPosition().getY()-giraff.getRadius()/2), (int) giraff.getRadius(), (int) giraff.getRadius());
+        }
+
         long end = System.nanoTime();
         //System.out.println((start-end)/1000000);
 
