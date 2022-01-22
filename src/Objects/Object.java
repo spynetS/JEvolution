@@ -4,34 +4,61 @@ import Msc.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class Object {
 
     private Sprite sprite;
     private Vector2 position;
     private Vector2 scale;
-    private Vector2[] spriteVector;
+    private Vector2 direction = new Vector2(1,0);
+
+    private float angle=180;
+
     private int spriteCounter;
     private int currentSprite;
-    
-    private int topSpeed = 10;
-    private int cruisingSpeed=5;
-    private int currentSpeed=5;
+
+    private float topSpeed = 2;
+    private float cruisingSpeed=0.5f;
+    private float currentSpeed=0.5f;
 
     private float health=100; //full health
     private float hunger=100; // no hunger
     private float thirst=100; // no thirst
     private float stamina=100; // full stamina
 
+    private int ranTimer = 0;
+
+    Random ran = new Random();
+
+
     private ObjectInfoPanel infoPanel = new ObjectInfoPanel();
 
-    private float timer = 10;
+    private float timer = 30;
+
+    public float getAngle() {
+        return angle;
+    }
+
+    public void setAngle(float angle) {
+        this.angle = angle;
+    }
 
     public Object(Vector2 position) {
         this.position = position;
+        sprite = new Sprite();
+        sprite.setPath("/spritesheet.png");
+        sprite.loadSprites(new Vector2[]{new Vector2(0,0),new Vector2(0,1)});
+
     }
 
+    public Vector2 getDirection() {
+        return direction;
+    }
 
+    public void setDirection(Vector2 direction) {
+        this.direction = direction;
+    }
 
     public ObjectInfoPanel getInfoPanel() {
         return infoPanel;
@@ -50,10 +77,10 @@ public class Object {
     }
 
     public Vector2 getSpritePosition(){
-        int x = (getPosition().getX()-((getAnimation().getWidth()/2)));
-        int y = (getPosition().getY()-((getAnimation().getHeight()/2)));
+        float x = (getPosition().getX()-((sprite.getTILE_SIZE()/2)));
+        float y = (getPosition().getY()-((sprite.getTILE_SIZE()/2)));
 
-         return new Vector2(x,y);
+        return new Vector2(x,y);
     }
 
     public int getSpriteCounter() {
@@ -72,27 +99,27 @@ public class Object {
         this.currentSprite = currentSprite;
     }
 
-    public int getTopSpeed() {
+    public float getTopSpeed() {
         return topSpeed;
     }
 
-    public void setTopSpeed(int topSpeed) {
+    public void setTopSpeed(float topSpeed) {
         this.topSpeed = topSpeed;
     }
 
-    public int getCruisingSpeed() {
+    public float getCruisingSpeed() {
         return cruisingSpeed;
     }
 
-    public void setCruisingSpeed(int cruisingSpeed) {
+    public void setCruisingSpeed(float cruisingSpeed) {
         this.cruisingSpeed = cruisingSpeed;
     }
 
-    public int getCurrentSpeed() {
+    public float getCurrentSpeed() {
         return currentSpeed;
     }
 
-    public void setCurrentSpeed(int currentSpeed) {
+    public void setCurrentSpeed(float currentSpeed) {
         this.currentSpeed = currentSpeed;
     }
 
@@ -138,14 +165,6 @@ public class Object {
 
     private AnimalStates state;
 
-    public Vector2[] getSpriteVector() {
-        return spriteVector;
-    }
-
-    public void setSpriteVector(Vector2[] spriteVector) {
-        this.spriteVector = spriteVector;
-    }
-
     public Vector2 getScale() {
         return scale;
     }
@@ -170,11 +189,27 @@ public class Object {
         this.position = position;
     }
 
+    public void randomRot()
+    {
+        if(ranTimer>200)
+        {
+            int angle = ran.nextInt(360);
+            System.out.println(angle);
+            setAngle(angle);
+            setDirection(getDirection().getDirection((double)angle));
+
+            ranTimer = 0;
+
+        }
+        ranTimer+=1;
+    }
 
     public void Update()
     {
-        //getInfoPanel().setLocation(new Point(getPosition().getX()-100,getPosition().getY()-80));
+       // getInfoPanel().setLocation(new Point((int) (getPosition().getX()-100), (int) (getPosition().getY()-80)));
         //infoPanel.setData(this);
+         //this.setHunger((this.getHunger()-0.01f));
+
     }
 
     public void Die()
@@ -184,15 +219,18 @@ public class Object {
 
     public BufferedImage getAnimation()
     {
-        getSprite().setGrid(spriteVector[currentSprite]);
-        getSprite().loadSprite();
+
+        int spritesLen = getSprite().getSprites().length;
+        //System.out.println(spritesLen);
         //Adds until timer then 0
         spriteCounter = (spriteCounter+1>=timer) ? 0 :spriteCounter+1;
         //Sets the current sprite index
-        currentSprite = currentSprite+1>=spriteVector.length&&spriteCounter>=timer-1?0:spriteCounter>=timer-1?currentSprite+1:currentSprite;
-        Sprite.resize(getSprite().getSpriteImage(),new Vector2(100,100));
+        currentSprite = (currentSprite+1>=spritesLen&&spriteCounter>=timer-1) ?0:(spriteCounter>=timer-1)? (currentSprite+1): currentSprite;
+        //Sprite.resize(getSprite().getSpriteImage(),new Vector2(100,100));
+        getSprite().setSpriteImage(getSprite().getSprites()[currentSprite]);
 
-        return Sprite.resize(getSprite().getSpriteImage(),new Vector2(100,100));
+        return (getSprite().rotate(angle));
     }
 
 }
+

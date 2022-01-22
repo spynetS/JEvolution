@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Main {
 
-    public static final int DELAY = 20;
+    public static final int DELAY = 10;
 
     public static void main(String[] args)
     {
@@ -13,6 +13,7 @@ public class Main {
         frame.setTitle("JEvolution");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Map m = new Map();
+        m.setFocusable(true);
         frame.add(m);
         frame.setVisible(true);
 
